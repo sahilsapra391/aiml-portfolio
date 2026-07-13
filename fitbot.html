@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FitBot — Artifact 1 · Sahil Sapra</title>
+<meta name="description" content="FitBot: an evidence-based AI fitness assistant built with Design Thinking. Artifact 1 of Sahil Sapra's AIML-500 professional portfolio.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231B4F9C'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='monospace'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7FB;
+  --panel:#FFFFFF;
+  --ink:#101828;
+  --muted:#5B6472;
+  --accent:#1B4F9C;
+  --accent-bright:#2163CA;
+  --pass:#0E8A5F;
+  --pass-bg:#EAF6F0;
+  --line:#D8DEE9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;font-size:19px;line-height:1.65;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+a:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:2px}
+
+/* ---------- nav ---------- */
+nav{border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.nav-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none}
+.back{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em}
+.back:hover{color:var(--accent-bright)}
+
+/* ---------- hero ---------- */
+header.hero{padding:64px 0 48px;border-bottom:1px solid var(--line)}
+.hero-top{display:flex;gap:26px;align-items:center;flex-wrap:wrap}
+.logo-badge{flex:0 0 auto}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:14px;
+}
+h1{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(34px,6vw,52px);letter-spacing:-0.03em;line-height:1.05;margin-bottom:14px;
+}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  border:1px solid var(--line);background:var(--panel);border-radius:999px;
+  padding:5px 13px;color:var(--muted);letter-spacing:0.04em;
+}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;
+  text-decoration:none;border-radius:8px;padding:13px 22px;letter-spacing:-0.01em;
+  transition:transform .12s ease, background .12s ease;
+}
+.btn-solid{background:var(--accent-bright);color:#fff}
+.btn-solid:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-ghost{border:1px solid var(--accent);color:var(--accent);background:var(--panel)}
+.btn-ghost:hover{background:#EEF3FB}
+
+/* ---------- numbers strip ---------- */
+.numbers{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+  padding:34px 0;border-bottom:1px solid var(--line);
+}
+@media(max-width:680px){.numbers{grid-template-columns:repeat(2,1fr)}}
+.num{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 16px}
+.num b{font-family:'Space Grotesk',sans-serif;font-size:26px;font-weight:700;display:block;letter-spacing:-0.02em;color:var(--accent)}
+.num span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted)}
+
+/* ---------- field sections ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+.field{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);
+  border:1px solid var(--accent);border-radius:4px;
+  padding:5px 10px;margin-bottom:20px;background:var(--panel);
+}
+.field::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-bright)}
+h2{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:clamp(24px,3.6vw,30px);letter-spacing:-0.02em;margin-bottom:16px;
+}
+p+p{margin-top:15px}
+ol.process{margin:10px 0 0 22px}
+ol.process li{margin-bottom:14px;padding-left:6px}
+ol.process b{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;letter-spacing:-0.01em}
+ul.plain{margin:10px 0 0 22px}
+ul.plain li{margin-bottom:10px}
+
+/* ---------- VP panel ---------- */
+.vp-panel{
+  background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:8px;padding:28px 30px;font-size:20.5px;line-height:1.6;
+}
+
+/* ---------- test results (signature) ---------- */
+.testbox{
+  background:#0F1B2D;border-radius:10px;padding:26px 28px;margin-top:22px;
+  font-family:'IBM Plex Mono',monospace;font-size:14px;line-height:2.05;color:#C9D6E8;
+  overflow-x:auto;
+}
+.testbox .t-head{color:#7FA8E0;font-size:12px;text-transform:uppercase;letter-spacing:0.12em;display:block;margin-bottom:10px}
+.testbox .pass{color:#4ED39A;font-weight:600}
+.testbox .pend{color:#8B98AB}
+.testbox .tid{color:#7FA8E0}
+
+/* ---------- evidence gallery ---------- */
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:26px}
+@media(max-width:680px){.gallery{grid-template-columns:1fr}}
+figure{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+figure img{width:100%;display:block}
+.img-fallback{
+  display:none;align-items:center;justify-content:center;text-align:center;
+  min-height:210px;padding:20px;background:#EDF1F8;
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);
+  letter-spacing:0.04em;line-height:1.7;
+}
+figcaption{
+  padding:13px 16px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+  color:var(--muted);border-top:1px solid var(--line);letter-spacing:0.02em;
+}
+
+/* ---------- references ---------- */
+.refs{margin-top:8px}
+.refs p{font-size:16.5px;color:var(--muted);padding-left:28px;text-indent:-28px;margin-top:12px}
+
+/* ---------- footer ---------- */
+footer{padding:44px 0 60px}
+.foot-line{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.04em}
+.foot-links{margin-top:12px}
+.foot-links a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);text-decoration:none;margin-right:20px}
+.foot-links a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="nav-name" href="index.html">Sahil Sapra</a>
+    <a class="back" href="index.html">← Portfolio home</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top">
+      <div class="logo-badge" aria-hidden="true">
+        <svg width="96" height="96" viewBox="222 22 236 236" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FitBot logo">
+          <circle cx="340" cy="150" r="118" fill="#2163CA"/>
+          <circle cx="340" cy="150" r="104" fill="#FFFFFF"/>
+          <rect x="292" y="94" width="96" height="76" rx="26" fill="#2163CA"/>
+          <path d="M316 122 Q322 116 328 122" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <path d="M352 122 Q358 116 364 122" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <path d="M318 144 Q340 158 362 144" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round" fill="none"/>
+          <circle cx="306" cy="134" r="5" fill="#7FB0EE" opacity="0.55"/>
+          <circle cx="374" cy="134" r="5" fill="#7FB0EE" opacity="0.55"/>
+          <rect x="268" y="188" width="144" height="12" rx="6" fill="#1B4F9C"/>
+          <rect x="252" y="174" width="22" height="40" rx="8" fill="#2163CA"/>
+          <rect x="232" y="180" width="16" height="28" rx="7" fill="#7FB0EE"/>
+          <rect x="406" y="174" width="22" height="40" rx="8" fill="#2163CA"/>
+          <rect x="432" y="180" width="16" height="28" rx="7" fill="#7FB0EE"/>
+        </svg>
+      </div>
+      <div>
+        <div class="eyebrow">Artifact 01 · Workshop 1 · AI Lab</div>
+        <h1>FitBot: An Evidence-Based<br>AI Fitness Assistant</h1>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip">Custom GPT</span>
+      <span class="chip">Design Thinking</span>
+      <span class="chip">Knowledge-grounded</span>
+      <span class="chip">Live product</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="https://chatgpt.com/g/g-6a527195c8b88191a5d838330edbf5eb-fitbot" target="_blank" rel="noopener">Try FitBot live →</a>
+      <a class="btn btn-ghost" href="https://chatgpt.com/share/6a5276da-f580-83ea-9c41-4107a4cdb680" target="_blank" rel="noopener">View a real test conversation</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="numbers">
+    <div class="num"><b>3</b><span>Model runs compared</span></div>
+    <div class="num"><b>4</b><span>Evidence files grounding it</span></div>
+    <div class="num"><b>8</b><span>Test scenarios designed</span></div>
+    <div class="num"><b>4/4</b><span>Core tests passed</span></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 01 — Introduction</span>
+    <h2>The one-line pitch</h2>
+    <p>FitBot is a live, publicly available custom GPT that gives busy, previously inactive desk professionals a personalized fitness starting point — training plan, nutrition structure, and honest timeline, together in one conversation. Its defining behavior: <strong>it asks who you are before telling you what to do.</strong></p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 02 — Description</span>
+    <h2>What it is and how it behaves</h2>
+    <p>FitBot runs a hybrid adaptive intake. It maintains six required fields — goal, current activity level, time available, equipment access, injuries and limitations, and dietary constraints — extracts whatever the user already said, and asks only for what's missing. Once the picture is complete, it delivers an integrated plan in one response: a workout table matched to the user's time and equipment, a practical nutrition structure honoring their dietary constraints, and staged timeline expectations (energy in 2–4 weeks, visible change typically 6–12 weeks).</p>
+    <p>Recommendations are grounded in four uploaded evidence sources with web browsing deliberately disabled, so the assistant cites curated guidance rather than improvising. Hard safety boundaries govern medical topics, supplements, minors, and disordered-eating signals: FitBot declines to program around unmanaged medical conditions and directs those users to professional clearance instead.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 03 — Objective</span>
+    <h2>Why I built it</h2>
+    <p>FitBot was built for the AIML-500 AI Lab to apply the full Design Thinking cycle — Empathize, Define, Ideate, Prototype, Test — to a real AI product. The design problem came directly from research: across three controlled ChatGPT runs using an identical structured prompt, not one asked a single clarifying question before prescribing a plan, despite the prompt stating two years of inactivity. Three high-quality, essentially interchangeable generic plans — and zero curiosity about the person. FitBot exists to close that gap.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 04 — Process</span>
+    <h2>How it was made</h2>
+    <ol class="process">
+      <li><b>Research.</b> Ran one structured prompt (Context / Task / Constraints) across three model configurations and compared outputs; studied a top fitness custom GPT through eight scripted interactions; generated and critically evaluated a STORM research article on beginner training and nutrition evidence.</li>
+      <li><b>Empathize &amp; Define.</b> Defined the persona (desk professional, 22–35, inactive a year or more), wrote the problem statement, and mapped each user need to a specific AI capability.</li>
+      <li><b>Ideate.</b> Evaluated four architectures — Q&amp;A bot, fixed-form intake, hybrid adaptive coach, multi-bot suite — against impact, feasibility, and user value. Chose the hybrid adaptive coach.</li>
+      <li><b>Prototype.</b> Built in ChatGPT's GPT Builder: full instruction set encoding the intake flow, delivery format, tone, evidence rules, and safety boundaries; four knowledge files uploaded; browsing disabled; conversation starters and a custom logo.</li>
+      <li><b>Test.</b> Designed an eight-scenario matrix mapping every major rule to a test. Executed the four core-loop scenarios against the live product — all passed (results below).</li>
+    </ol>
+    <div class="testbox" role="img" aria-label="Test results: four core tests passed, four boundary tests designed for future execution">
+      <span class="t-head">FitBot · behavioral test run</span>
+      <span class="tid">T1</span> vague opener → asks clarifying questions first <span class="pass">✓ PASS</span><br>
+      <span class="tid">T2</span> info-rich opener → no redundant questions <span class="pass">✓ PASS</span><br>
+      <span class="tid">T5</span> "how long until abs?" → honest timeline, no hype <span class="pass">✓ PASS</span><br>
+      <span class="tid">T7</span> "remove that exercise" → preference persists everywhere <span class="pass">✓ PASS</span>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 05 — Tools &amp; Technologies</span>
+    <h2>What it's built with</h2>
+    <ul class="plain">
+      <li><strong>ChatGPT GPT Builder</strong> — custom GPT platform: instruction set, knowledge uploads, capability configuration, public sharing.</li>
+      <li><strong>STORM AI (Stanford)</strong> — multi-perspective research assistant used to generate and evaluate the evidence article that became knowledge file #1.</li>
+      <li><strong>Knowledge base</strong> — WHO Guidelines on Physical Activity and Sedentary Behaviour; Physical Activity Guidelines for Americans (2nd ed.); Dietary Guidelines for Americans 2020–2025; the STORM-generated research article.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 06 — Value Proposition</span>
+    <h2>Why this artifact matters</h2>
+    <div class="vp-panel">
+      For anyone evaluating whether I can build with AI rather than just talk about it, FitBot is the evidence: a complete cycle from user research to problem definition to instruction design, knowledge grounding, and behavioral testing — ending in a working product you can open and use right now.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 07 — Unique Value</span>
+    <h2>What makes it different</h2>
+    <p>Most AI fitness tools answer; FitBot interviews. The proactive-intake design directly fixes the failure mode my research documented — generic plans delivered without a single question. Its other differentiators were written as testable requirements before the build, then verified against the live product: nutrition, training, and timeline delivered together; recommendations grounded in curated evidence with browsing disabled; honest expectation-setting instead of hype; and safety boundaries that decline rather than improvise.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 08 — Relevance</span>
+    <h2>How it connects to my value proposition</h2>
+    <p>The skills in this artifact transfer directly to production AI work: conversational UX design, system-prompt and instruction engineering, retrieval-style knowledge grounding, model behavior evaluation, and responsible-AI boundary setting. It's a small product, but it exercises the same competencies my program — and the industry — are building toward, and it demonstrates the working style my personal value proposition promises: research first, build second, verify third.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 09 — Evidence</span>
+    <h2>See it working</h2>
+    <div class="gallery">
+      <figure>
+        <img src="fitbot-landing.png" alt="FitBot landing page showing the logo, description, and conversation starters"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback">SCREENSHOT SLOT<br>fitbot-landing.png<br>(FitBot landing page)</div>
+        <figcaption>The published FitBot: logo, description, conversation starters</figcaption>
+      </figure>
+      <figure>
+        <img src="fitbot-intake.png" alt="FitBot responding to a vague request by asking clarifying questions instead of giving a generic plan"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback">SCREENSHOT SLOT<br>fitbot-intake.png<br>(clarifying questions — test T1)</div>
+        <figcaption>Test T1 — "help me get fit" triggers questions, not a generic plan</figcaption>
+      </figure>
+      <figure>
+        <img src="fitbot-plan.png" alt="FitBot delivering the integrated plan: workout table, nutrition structure, and timeline together"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback">SCREENSHOT SLOT<br>fitbot-plan.png<br>(integrated plan delivery)</div>
+        <figcaption>Under the hood: the instruction set</figcaption>
+      </figure>
+      <figure>
+        <img src="fitbot-config.png" alt="GPT Builder configuration page showing FitBot's instructions and uploaded knowledge files"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="img-fallback">SCREENSHOT SLOT<br>fitbot-config.png<br>(build configuration + knowledge files)</div>
+        <figcaption>Under the hood: four knowledge files</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 10 — References</span>
+    <h2>References</h2>
+    <div class="refs">
+      <p>Shao, Y., Jiang, Y., Kanell, T., Xu, P., Khattab, O., &amp; Lam, M. (2024). <em>Assisting in writing Wikipedia-like articles from scratch with large language models</em> (STORM). Stanford University. https://storm.genie.stanford.edu</p>
+      <p>U.S. Department of Agriculture &amp; U.S. Department of Health and Human Services. (2020). <em>Dietary Guidelines for Americans, 2020–2025</em> (9th ed.). https://www.dietaryguidelines.gov</p>
+      <p>U.S. Department of Health and Human Services. (2018). <em>Physical Activity Guidelines for Americans</em> (2nd ed.). https://health.gov</p>
+      <p>World Health Organization. (2020). <em>WHO guidelines on physical activity and sedentary behaviour</em>. https://www.who.int</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-line">Sahil Sapra · AIML-500 Professional Portfolio · Indiana Wesleyan University · 2026</div>
+    <div class="foot-links">
+      <a href="index.html">Portfolio home</a>
+      <a href="https://chatgpt.com/g/g-6a527195c8b88191a5d838330edbf5eb-fitbot" target="_blank" rel="noopener">Try FitBot</a>
+      <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

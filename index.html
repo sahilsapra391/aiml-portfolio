@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sahil Sapra — AI/ML Professional Portfolio</title>
+<meta name="description" content="Professional portfolio of Sahil Sapra — Technical Product Manager and AI builder. AIML-500, Indiana Wesleyan University.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231B4F9C'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='monospace'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7FB;
+  --panel:#FFFFFF;
+  --ink:#101828;
+  --muted:#5B6472;
+  --accent:#1B4F9C;
+  --accent-bright:#2163CA;
+  --pass:#0E8A5F;
+  --line:#D8DEE9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;
+  font-size:19px;
+  line-height:1.65;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+/* ---------- nav ---------- */
+nav{
+  border-bottom:1px solid var(--line);
+  background:var(--paper);
+}
+.nav-inner{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 0;
+}
+.nav-name{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;
+  letter-spacing:-0.01em;color:var(--ink);text-decoration:none;
+}
+.nav-links a{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;
+  color:var(--muted);text-decoration:none;margin-left:22px;
+  text-transform:uppercase;letter-spacing:0.06em;
+}
+.nav-links a:hover,.nav-links a:focus-visible{color:var(--accent-bright)}
+a:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:2px}
+
+/* ---------- hero ---------- */
+header.hero{padding:84px 0 64px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);
+  margin-bottom:22px;
+}
+h1{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(42px,7vw,64px);letter-spacing:-0.03em;line-height:1.02;
+  margin-bottom:18px;
+}
+.hero-role{
+  font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:20px;
+  color:var(--accent);margin-bottom:20px;letter-spacing:-0.01em;
+}
+.hero-lede{max-width:620px;color:var(--muted);font-size:20px}
+
+/* ---------- field label (signature) ---------- */
+.field{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);
+  border:1px solid var(--accent);border-radius:4px;
+  padding:5px 10px;margin-bottom:22px;background:var(--panel);
+}
+.field::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-bright)}
+
+section{padding:64px 0;border-bottom:1px solid var(--line)}
+h2{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:clamp(26px,4vw,34px);letter-spacing:-0.02em;margin-bottom:20px;
+}
+p+p{margin-top:16px}
+
+/* ---------- value prop panel ---------- */
+.vp-panel{
+  background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:8px;padding:30px 32px;
+  font-size:21px;line-height:1.6;
+}
+.vp-panel em{font-style:italic}
+
+/* ---------- artifact cards ---------- */
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+@media(max-width:680px){.cards{grid-template-columns:1fr}}
+.card{
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;
+  padding:26px;display:flex;flex-direction:column;gap:12px;
+  transition:border-color .15s ease, transform .15s ease;
+}
+.card.live:hover{border-color:var(--accent-bright);transform:translateY(-2px)}
+.card-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;
+}
+.card-tag.shipped{color:var(--pass)}
+.card-tag.reserved{color:var(--muted)}
+.card h3{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:21px;
+  letter-spacing:-0.01em;
+}
+.card p{font-size:16.5px;color:var(--muted);line-height:1.55}
+.card a.card-link{
+  margin-top:auto;font-family:'IBM Plex Mono',monospace;font-size:13.5px;
+  color:var(--accent-bright);text-decoration:none;font-weight:500;
+}
+.card a.card-link:hover{text-decoration:underline}
+.card.ghost{border-style:dashed;background:transparent}
+.card.ghost h3{color:var(--muted)}
+
+/* ---------- footer ---------- */
+footer{padding:44px 0 60px}
+.foot-line{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);
+  letter-spacing:0.04em;
+}
+.foot-links{margin-top:12px}
+.foot-links a{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);
+  text-decoration:none;margin-right:20px;
+}
+.foot-links a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="nav-name" href="index.html">Sahil Sapra</a>
+    <div class="nav-links">
+      <a href="#bio">Bio</a>
+      <a href="#value">Value</a>
+      <a href="#artifacts">Artifacts</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">AI/ML Professional Portfolio · AIML-500 · Indiana Wesleyan University</div>
+    <h1>Builds that hold up<br>under testing.</h1>
+    <div class="hero-role">Sahil Sapra — Technical Product Manager · AI Builder</div>
+    <p class="hero-lede">A working record of my graduate AI/ML program: the products I build, the process behind them, and the tests they pass. Every artifact here is something you can open, use, and verify.</p>
+  </div>
+</header>
+
+<section id="bio">
+  <div class="wrap">
+    <span class="field">Professional Bio</span>
+    <h2>Who I am</h2>
+    <p>I'm Sahil Sapra — a Technical Product Manager and builder based in Charlotte, North Carolina. I'm the co-founder and Head of Product at <strong>SpecHawk</strong>, an AI-powered QA automation platform, and previously led product and business analysis work on enterprise aviation software at CAMP Systems. I'm currently pursuing an M.S. in Computer Systems with an AI specialization at Indiana Wesleyan University.</p>
+    <p>I got into product because I like the seam where user problems meet technical possibility — and AI has made that seam the most interesting place in software. My aspiration is straightforward: keep building AI products that hold up in the real world, and lead teams that do the same. This portfolio documents that journey through my graduate program — the experiments, the builds, the tests, and what each one taught me.</p>
+  </div>
+</section>
+
+<section id="value">
+  <div class="wrap">
+    <span class="field">Personal Value Proposition</span>
+    <h2>The value I bring</h2>
+    <div class="vp-panel">
+      As a technical product manager who ships products <em>and</em> builds with AI hands-on, I help organizations turn ambiguous AI opportunities into working, tested products. I pair classical product discipline — user research, prioritization, measurable outcomes — with practical AI fluency, so the teams I work with get someone who can interview a customer in the morning and prototype the solution with an LLM that afternoon.
+    </div>
+  </div>
+</section>
+
+<section id="artifacts">
+  <div class="wrap">
+    <span class="field">Course Artifacts</span>
+    <h2>Artifacts</h2>
+    <p>Each artifact is a tangible deliverable from AIML-500, documented with its objective, process, tools, and value proposition. The collection grows as the course progresses.</p>
+    <div class="cards">
+      <div class="card live">
+        <span class="card-tag shipped">● Live product — Workshop 1</span>
+        <h3>FitBot: An Evidence-Based AI Fitness Assistant</h3>
+        <p>A custom GPT built with the full Design Thinking cycle — research, problem definition, instruction design, knowledge grounding, and an executed test matrix. It asks who you are before telling you what to do.</p>
+        <a class="card-link" href="fitbot.html">View artifact →</a>
+      </div>
+      <div class="card ghost">
+        <span class="card-tag reserved">○ Reserved</span>
+        <h3>Artifact 2</h3>
+        <p>Added as the course progresses.</p>
+      </div>
+      <div class="card ghost">
+        <span class="card-tag reserved">○ Reserved</span>
+        <h3>Artifact 3</h3>
+        <p>Added as the course progresses.</p>
+      </div>
+      <div class="card ghost">
+        <span class="card-tag reserved">○ Reserved</span>
+        <h3>Artifacts 4–5</h3>
+        <p>Added as the course progresses.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-line">Sahil Sapra · AIML-500 Professional Portfolio · Indiana Wesleyan University · 2026</div>
+    <div class="foot-links">
+      <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
+      <a href="#" title="https://www.linkedin.com/in/sahil-sapra">LinkedIn</a>
+      <a href="https://chatgpt.com/g/g-6a527195c8b88191a5d838330edbf5eb-fitbot" target="_blank" rel="noopener">Try FitBot</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
