@@ -8,4 +8,6 @@ Graduate AI/ML portfolio for AIML-500 at Indiana Wesleyan University.
 
 - `index.html` — Home: professional bio, personal value proposition, artifacts grid
 - `fitbot.html` — Artifact 1: FitBot, an evidence-based AI fitness assistant (custom GPT)
-- `fitbot-landing.png`, `fitbot-intake.png`, `fitbot-plan.png`, `fitbot-config.png` — evidence screenshots
+- `ml-vs-dl.html` — Artifact 2: Machine Learning vs. Deep Learning analysis
+- `ml-vs-dl-analysis.pdf` — full written essay linked from Artifact 2
+- `fitbot-landing.png`, `fitbot-intake.png`, `fitbot-plan.png`, `fitbot-config.png` — Artifact 1 evidence screenshots
