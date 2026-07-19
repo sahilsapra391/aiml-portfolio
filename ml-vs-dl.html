@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ML vs. Deep Learning — Artifact 2 · Sahil Sapra</title>
+<meta name="description" content="Machine Learning vs. Deep Learning: picking the right tool for the job. Artifact 2 of Sahil Sapra's AIML-500 professional portfolio.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231B4F9C'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='monospace'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7FB;
+  --panel:#FFFFFF;
+  --ink:#101828;
+  --muted:#5B6472;
+  --accent:#1B4F9C;
+  --accent-bright:#2163CA;
+  --ml:#1B4F9C;
+  --ml-bg:#EAF1FB;
+  --dl:#8A3FFC;
+  --dl-bg:#F3ECFE;
+  --line:#D8DEE9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;font-size:19px;line-height:1.65;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+a:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:2px}
+
+/* ---------- nav ---------- */
+nav{border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.nav-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none}
+.back{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em}
+.back:hover{color:var(--accent-bright)}
+
+/* ---------- hero ---------- */
+header.hero{padding:64px 0 44px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:16px;
+}
+h1{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(34px,6vw,52px);letter-spacing:-0.03em;line-height:1.05;margin-bottom:16px;
+}
+.hero-sub{max-width:640px;color:var(--muted);font-size:20px;margin-bottom:24px}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  border:1px solid var(--line);background:var(--panel);border-radius:999px;
+  padding:5px 13px;color:var(--muted);letter-spacing:0.04em;
+}
+
+/* ---------- thesis / signature framework ---------- */
+.thesis{padding:44px 0;border-bottom:1px solid var(--line)}
+.thesis-lead{
+  font-size:22px;line-height:1.55;max-width:720px;margin-bottom:30px;
+}
+.thesis-lead b{font-family:'Space Grotesk',sans-serif;font-weight:600}
+.frame{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+@media(max-width:680px){.frame{grid-template-columns:1fr}}
+.frame-col{padding:26px 26px 28px}
+.frame-col.ml{background:var(--ml-bg);border-right:1px solid var(--line)}
+.frame-col.dl{background:var(--dl-bg)}
+@media(max-width:680px){.frame-col.ml{border-right:none;border-bottom:1px solid var(--line)}}
+.frame-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.08em;margin-bottom:6px;display:flex;align-items:center;gap:8px;
+}
+.frame-col.ml .frame-tag{color:var(--ml)}
+.frame-col.dl .frame-tag{color:var(--dl)}
+.frame-tag .dot{width:8px;height:8px;border-radius:50%}
+.frame-col.ml .dot{background:var(--ml)}
+.frame-col.dl .dot{background:var(--dl)}
+.frame-metaphor{font-style:italic;font-size:17px;color:var(--ink);margin-bottom:16px;opacity:0.85}
+.frame-col h3{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:19px;margin-bottom:12px;letter-spacing:-0.01em}
+.frame-list{list-style:none}
+.frame-list li{font-size:15.5px;line-height:1.5;padding:5px 0 5px 20px;position:relative;color:#2A3441}
+.frame-list li::before{content:"→";position:absolute;left:0;font-family:'IBM Plex Mono',monospace}
+.frame-col.ml .frame-list li::before{color:var(--ml)}
+.frame-col.dl .frame-list li::before{color:var(--dl)}
+
+/* ---------- field sections ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+.field{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);
+  border:1px solid var(--accent);border-radius:4px;
+  padding:5px 10px;margin-bottom:20px;background:var(--panel);
+}
+.field::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-bright)}
+h2{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:clamp(24px,3.6vw,30px);letter-spacing:-0.02em;margin-bottom:16px;
+}
+p+p{margin-top:15px}
+ol.process{margin:10px 0 0 22px}
+ol.process li{margin-bottom:14px;padding-left:6px}
+ol.process b{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;letter-spacing:-0.01em}
+ul.plain{margin:10px 0 0 22px}
+ul.plain li{margin-bottom:10px}
+
+/* ---------- example deep-dive cards ---------- */
+.ex{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:28px 30px;margin-top:20px}
+.ex.ml-ex{border-top:4px solid var(--ml)}
+.ex.dl-ex{border-top:4px solid var(--dl)}
+.ex-label{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.ex.ml-ex .ex-label{color:var(--ml)}
+.ex.dl-ex .ex-label{color:var(--dl)}
+.ex h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:23px;margin-bottom:6px;letter-spacing:-0.02em}
+.ex .real{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);margin-bottom:16px}
+.ex h4{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;margin:16px 0 6px;letter-spacing:-0.01em}
+.ex p{font-size:17px;line-height:1.6}
+.ex .wrongmove{border-left:3px solid var(--line);padding-left:16px;margin-top:16px;color:var(--muted);font-size:16.5px}
+
+/* ---------- VP panel ---------- */
+.vp-panel{
+  background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:8px;padding:28px 30px;font-size:20.5px;line-height:1.6;
+}
+
+/* ---------- read-full ---------- */
+.readfull{
+  display:inline-flex;align-items:center;gap:8px;margin-top:8px;
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;
+  color:#fff;background:var(--accent-bright);text-decoration:none;
+  border-radius:8px;padding:12px 20px;transition:background .12s ease, transform .12s ease;
+}
+.readfull:hover{background:var(--accent);transform:translateY(-1px)}
+
+/* ---------- footer ---------- */
+footer{padding:44px 0 60px}
+.foot-line{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.04em}
+.foot-links{margin-top:12px}
+.foot-links a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);text-decoration:none;margin-right:20px}
+.foot-links a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="nav-name" href="index.html">Sahil Sapra</a>
+    <a class="back" href="index.html">← Portfolio home</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Artifact 02 · Workshop 2 · Applied AI Analysis</div>
+    <h1>Machine Learning vs.<br>Deep Learning</h1>
+    <p class="hero-sub">Picking the right tool for the job — a decision framework built from two real systems on opposite ends of the spectrum.</p>
+    <div class="chips">
+      <span class="chip">Analytical writing</span>
+      <span class="chip">Model selection</span>
+      <span class="chip">Applied judgment</span>
+    </div>
+  </div>
+</header>
+
+<div class="thesis">
+  <div class="wrap">
+    <p class="thesis-lead">The lazy mental model says deep learning is just the newer, better machine learning. It isn't. <b>Deep learning is a specialist, not an upgrade</b> — extraordinary at a narrow band of problems and wasteful or worse everywhere else. The useful question was never "which is more advanced," but "what does this specific problem actually need?"</p>
+    <div class="frame">
+      <div class="frame-col ml">
+        <div class="frame-tag"><span class="dot"></span>Machine Learning</div>
+        <div class="frame-metaphor">"Hand someone a checklist."</div>
+        <h3>Reach for it when…</h3>
+        <ul class="frame-list">
+          <li>Data is already structured &amp; meaningful</li>
+          <li>You need a defensible explanation</li>
+          <li>The dataset is modest in size</li>
+          <li>Speed and low cost matter</li>
+          <li>Accountability is high (lending, law, tax)</li>
+        </ul>
+      </div>
+      <div class="frame-col dl">
+        <div class="frame-tag"><span class="dot"></span>Deep Learning</div>
+        <div class="frame-metaphor">"Teach them to read, let them work it out."</div>
+        <h3>Reach for it when…</h3>
+        <ul class="frame-list">
+          <li>Data is raw &amp; high-dimensional (pixels, audio)</li>
+          <li>The patterns can't be hand-listed in advance</li>
+          <li>Spatial or sequential structure is the point</li>
+          <li>You have large labeled data + compute</li>
+          <li>Feature engineering has hit a wall</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 01 — Introduction</span>
+    <h2>What this artifact is</h2>
+    <p>This is an applied analysis that puts machine learning and deep learning side by side using two real systems people actually use — one on each end of the spectrum — and argues that the right choice follows from the data and the demands of the problem, not from which technique sounds more impressive. It's a short written piece, but its real content is a reusable decision framework for model selection.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 02 — Description</span>
+    <h2>The two cases</h2>
+
+    <div class="ex ml-ex">
+      <div class="ex-label">● Machine Learning</div>
+      <h3>House Price Prediction</h3>
+      <div class="real">Real system: Zillow's "Zestimate" · bank &amp; appraiser valuation models</div>
+      <h4>Why ML fits</h4>
+      <p>The inputs are already clean, structured features — "2,000 square feet," "four bedrooms" — not raw signals a model has to decode. Linear regression learns how much each feature nudges price and combines them transparently. And because home valuation feeds mortgages, tax, and legal disputes, readable coefficients you can point to and defend aren't a nicety — fair-lending rules make that transparency non-negotiable. The data is modest, and the model trains fast and cheap.</p>
+      <div class="wrongmove"><strong>Why deep learning would be the wrong move:</strong> data-hungry deep nets overfit on a single housing market, their feature-discovery strength is wasted on already-clean inputs, and handing a regulator a twelve-layer black box as your explanation is a genuine liability. More compute for an answer that's no better — often worse.</div>
+    </div>
+
+    <div class="ex dl-ex">
+      <div class="ex-label">● Deep Learning</div>
+      <h3>Image Recognition</h3>
+      <div class="real">Real system: diabetic-retinopathy &amp; tumor screening · Face ID</div>
+      <h4>Why DL fits</h4>
+      <p>An image is about the least structured data there is — millions of pixels, where the things that matter (a faint cluster of abnormal vessels, a subtle texture change) can't be boiled down to a list a person writes in advance. A convolutional network learns features in layers: edges, then textures, then disease-specific patterns — discovered from the images themselves, and recognized wherever in the frame they appear. This domain has exactly what deep learning craves: large labeled datasets and the compute to train on them.</p>
+      <div class="wrongmove"><strong>Why traditional ML would fail:</strong> hand-crafting descriptors (edge maps, color histograms) never reliably captures these subtle patterns, and shoving raw pixels into logistic regression or an SVM throws away all spatial structure and drowns in dimensionality. Image recognition is the exact wall traditional methods kept hitting — getting past it is a big part of why deep learning took off.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 03 — Objective</span>
+    <h2>Why I created it</h2>
+    <p>I created this for the AIML-500 lesson on machine learning versus deep learning, and I'll admit I started with a lazy framing: ML was the old thing, DL the new-and-improved thing, and with enough resources you'd always want DL. The objective was to replace that with a real decision rule — to be able to look at a problem and reason about which family of techniques actually fits, and why the other one would be the wrong call.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 04 — Process</span>
+    <h2>How I made it</h2>
+    <ol class="process">
+      <li><b>Reframed the question.</b> Dropped "which is more advanced" in favor of "what does this problem need," treating deep learning as a specialist rather than an upgrade.</li>
+      <li><b>Chose opposite ends.</b> Picked two lesson examples that sit at the extremes — structured tabular prediction vs. raw image recognition — so the contrast would be sharp.</li>
+      <li><b>Grounded each in a real system.</b> Tied each abstract case to something people actually use (Zestimate; medical image screening and Face ID) so the argument wasn't purely theoretical.</li>
+      <li><b>Argued both directions.</b> For each case, explained why the chosen approach fits <em>and</em> why reaching for the other would fail — data shape, interpretability, data scale, and cost.</li>
+      <li><b>Distilled the rule.</b> Closed on the lesson's own metaphor: sometimes you hand someone a checklist, sometimes you teach them to read — the skill is knowing which situation you're in.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 05 — Tools &amp; Technologies</span>
+    <h2>What I used</h2>
+    <ul class="plain">
+      <li><strong>Concepts:</strong> linear regression, convolutional neural networks, feature engineering, interpretability, overfitting, the curse of dimensionality.</li>
+      <li><strong>Reference systems studied:</strong> automated valuation models (Zillow Zestimate), medical imaging classifiers, facial recognition.</li>
+      <li><strong>Written and structured</strong> as an analytical essay, then adapted into this framework-first portfolio format.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 06 — Value Proposition</span>
+    <h2>Why this artifact matters</h2>
+    <div class="vp-panel">
+      Knowing an algorithm is common; knowing <em>when not to use it</em> is what separates people who can apply AI from people who just collect techniques. This artifact shows I can look at a problem's data and constraints and choose the right approach — including the discipline to reach for the simpler tool when it's the better one.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 07 — Unique Value</span>
+    <h2>What makes it different</h2>
+    <p>Most write-ups of this topic list differences in a table and stop. This one is organized around a decision — every point earns its place by helping you choose. It argues both directions for each case (why the right tool fits and why the wrong tool fails), and it resists the industry's default bias toward whatever is newest. The willingness to say "the simpler model wins here" is itself the point.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 08 — Relevance</span>
+    <h2>How it connects to my value proposition</h2>
+    <p>Model selection is a first-order product decision, not just an engineering one — it drives cost, timeline, explainability, and regulatory exposure. As a technical product manager, being able to reason about ML-vs-DL tradeoffs is exactly the kind of judgment that keeps a team from spending six months and a GPU cluster on a problem linear regression would have solved by Friday. It pairs naturally with my first artifact: FitBot showed I can build; this shows I can decide what to build with.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 09 — Evidence</span>
+    <h2>Read the full analysis</h2>
+    <p>The complete written piece walks through both examples in depth, including the full argument for why each wrong-tool choice fails.</p>
+    <a class="readfull" href="ml-vs-dl-analysis.pdf" target="_blank" rel="noopener">Open the full analysis (PDF) →</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 10 — References</span>
+    <h2>References</h2>
+    <div class="refs" style="margin-top:8px">
+      <p style="font-size:16.5px;color:var(--muted);padding-left:28px;text-indent:-28px;margin-top:12px">AIML-500 course lesson: Machine Learning vs. Deep Learning. Indiana Wesleyan University. (2026).</p>
+      <p style="font-size:16.5px;color:var(--muted);padding-left:28px;text-indent:-28px;margin-top:12px">Reference systems discussed for illustration: Zillow Zestimate (automated valuation), deep-learning medical image screening, and facial recognition (Face ID). Cited as widely known examples, not as primary technical sources.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-line">Sahil Sapra · AIML-500 Professional Portfolio · Indiana Wesleyan University · 2026</div>
+    <div class="foot-links">
+      <a href="index.html">Portfolio home</a>
+      <a href="fitbot.html">Artifact 1: FitBot</a>
+      <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
