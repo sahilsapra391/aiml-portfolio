@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How Machines Learn — Artifact 3 · Sahil Sapra</title>
+<meta name="description" content="Machine learning training methods — supervised, unsupervised, and reinforcement learning — worked out in live dialogue with an AI coach. Artifact 3 of Sahil Sapra's AIML-500 portfolio.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231B4F9C'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='monospace'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7FB;
+  --panel:#FFFFFF;
+  --ink:#101828;
+  --muted:#5B6472;
+  --accent:#1B4F9C;
+  --accent-bright:#2163CA;
+  --sup:#1B4F9C;
+  --sup-bg:#EAF1FB;
+  --unsup:#0E7C6B;
+  --unsup-bg:#E7F4F1;
+  --rl:#B45309;
+  --rl-bg:#FBF0E3;
+  --line:#D8DEE9;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;font-size:19px;line-height:1.65;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+a:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:2px}
+
+/* ---------- nav ---------- */
+nav{border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.nav-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none}
+.back{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em}
+.back:hover{color:var(--accent-bright)}
+
+/* ---------- hero ---------- */
+header.hero{padding:64px 0 44px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:16px;
+}
+h1{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(34px,6vw,52px);letter-spacing:-0.03em;line-height:1.05;margin-bottom:16px;
+}
+.hero-sub{max-width:660px;color:var(--muted);font-size:20px;margin-bottom:24px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  border:1px solid var(--line);background:var(--panel);border-radius:999px;
+  padding:5px 13px;color:var(--muted);letter-spacing:0.04em;
+}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;
+  text-decoration:none;border-radius:8px;padding:13px 22px;letter-spacing:-0.01em;
+  transition:transform .12s ease, background .12s ease;
+}
+.btn-solid{background:var(--accent-bright);color:#fff}
+.btn-solid:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-ghost{border:1px solid var(--accent);color:var(--accent);background:var(--panel)}
+.btn-ghost:hover{background:#EEF3FB}
+
+/* ---------- thesis + training loop ---------- */
+.thesis{padding:44px 0;border-bottom:1px solid var(--line)}
+.thesis-lead{font-size:22px;line-height:1.55;max-width:720px;margin-bottom:28px}
+.thesis-lead b{font-family:'Space Grotesk',sans-serif;font-weight:600}
+.loop{
+  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:600;
+  letter-spacing:0.06em;
+}
+.loop .pill{
+  border:1px solid var(--accent);color:var(--accent);background:var(--panel);
+  border-radius:6px;padding:7px 12px;text-transform:uppercase;
+}
+.loop .arrow{color:var(--muted)}
+.loop .pill.repeat{border-style:dashed;color:var(--muted);border-color:var(--muted)}
+
+/* ---------- field labels ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+.field{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);
+  border:1px solid var(--accent);border-radius:4px;
+  padding:5px 10px;margin-bottom:20px;background:var(--panel);
+}
+.field::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-bright)}
+h2{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:clamp(24px,3.6vw,30px);letter-spacing:-0.02em;margin-bottom:16px;
+}
+p+p{margin-top:15px}
+ol.process{margin:10px 0 0 22px}
+ol.process li{margin-bottom:14px;padding-left:6px}
+ol.process b{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;letter-spacing:-0.01em}
+ul.plain{margin:10px 0 0 22px}
+ul.plain li{margin-bottom:10px}
+
+/* ---------- dialogue thread (signature) ---------- */
+.legend{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted);
+  letter-spacing:0.04em;margin:18px 0 22px;line-height:2;
+}
+.legend .dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin:0 5px 0 12px;vertical-align:middle}
+.legend .dot.sup{background:var(--sup)}
+.legend .dot.unsup{background:var(--unsup)}
+.legend .dot.rl{background:var(--rl)}
+.thread{display:flex;flex-direction:column;gap:16px;margin-top:6px}
+.msg{max-width:82%;border-radius:14px;padding:16px 20px;border:1px solid var(--line)}
+.msg .who{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;margin-bottom:6px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+}
+.msg p{font-size:16.5px;line-height:1.58}
+.msg.coach{align-self:flex-start;background:var(--panel)}
+.msg.coach .who{color:var(--muted)}
+.msg.me{align-self:flex-end;background:var(--sup-bg);border-color:#C8D9F2}
+.msg.me .who{color:var(--accent)}
+.qtag{
+  border-radius:4px;padding:2px 7px;font-size:10.5px;border:1px solid currentColor;
+}
+.qtag.sup{color:var(--sup);background:var(--sup-bg)}
+.qtag.unsup{color:var(--unsup);background:var(--unsup-bg)}
+.qtag.rl{color:var(--rl);background:var(--rl-bg)}
+.qtag.core{color:var(--muted);background:#EEF1F6}
+.qtag.beyond{color:#fff;background:var(--rl);border-color:var(--rl)}
+.msg.me.unsup{background:var(--unsup-bg);border-color:#BFE0D9}
+.msg.me.rl{background:var(--rl-bg);border-color:#EBD3B5}
+
+/* ---------- VP panel ---------- */
+.vp-panel{
+  background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:8px;padding:28px 30px;font-size:20.5px;line-height:1.6;
+}
+
+/* ---------- evidence ---------- */
+.videobox{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:22px}
+.videobox video{width:100%;display:block}
+.videobox .cap, figcaption{
+  padding:13px 16px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+  color:var(--muted);border-top:1px solid var(--line);letter-spacing:0.02em;
+}
+figure.shot{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:20px}
+figure.shot img{width:100%;display:block}
+.refs p{font-size:16.5px;color:var(--muted);padding-left:28px;text-indent:-28px;margin-top:12px}
+
+/* ---------- footer ---------- */
+footer{padding:44px 0 60px}
+.foot-line{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.04em}
+.foot-links{margin-top:12px}
+.foot-links a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);text-decoration:none;margin-right:20px}
+.foot-links a:hover{text-decoration:underline}
+@media(max-width:600px){.msg{max-width:94%}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="nav-name" href="index.html">Sahil Sapra</a>
+    <a class="back" href="index.html">← Portfolio home</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Artifact 03 · Workshop 3 · AI-Guided Learning Session</div>
+    <h1>How Machines Learn</h1>
+    <p class="hero-sub">Machine-learning training methods — supervised, unsupervised, and reinforcement — worked out in live dialogue with an AI coach, then distilled into plain English.</p>
+    <div class="chips">
+      <span class="chip">7 questions</span>
+      <span class="chip">3 learning paradigms</span>
+      <span class="chip">1 off-script detour</span>
+      <span class="chip">Session recorded</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="#dialogue">Read the dialogue ↓</a>
+      <a class="btn btn-ghost" href="#evidence">Watch the session ↓</a>
+    </div>
+  </div>
+</header>
+
+<div class="thesis">
+  <div class="wrap">
+    <p class="thesis-lead">This activity came with a twist: no lecture, no slides — just an AI coach, seven required questions, and a running conversation. The rule was simple: <b>you don't get to nod along.</b> You explain each concept back until it holds up. Underneath every one of those concepts sits the same engine:</p>
+    <div class="loop" role="img" aria-label="The machine learning training loop: data, predict, measure error, adjust, repeat">
+      <span class="pill">Data</span><span class="arrow">→</span>
+      <span class="pill">Predict</span><span class="arrow">→</span>
+      <span class="pill">Measure error</span><span class="arrow">→</span>
+      <span class="pill">Adjust</span><span class="arrow">→</span>
+      <span class="pill repeat">↻ Repeat</span>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 01 — Introduction</span>
+    <h2>What this artifact is</h2>
+    <p>This is an interactive learning session with SchoolAI's Machine Learning Training Methods Coach — a guided dialogue on how models actually learn. The format was the point: instead of reading about supervised learning, I had to explain it back, with an AI coach probing until each answer held up. What's here is the distilled result: seven core questions answered in plain English, plus the detour into RAG and fine-tuning that went beyond the assignment.</p>
+  </div>
+</section>
+
+<section id="dialogue">
+  <div class="wrap">
+    <span class="field">Field 02 — Description</span>
+    <h2>The session, distilled</h2>
+    <p>The dialogue covered the three learning paradigms plus the machinery underneath them: why algorithms matter, the steps of the training workflow, and the roles of data and repetition. Below, coach messages are paraphrased and my answers are distilled from the live session — the full recording is in the Evidence section.</p>
+    <div class="legend">Color key:<span class="dot sup"></span>Supervised<span class="dot unsup"></span>Unsupervised<span class="dot rl"></span>Reinforcement</div>
+
+    <div class="thread">
+      <div class="msg coach">
+        <div class="who"><span class="qtag sup">Q1 · Supervised</span>Coach</div>
+        <p>How does a supervised learning model learn from the training data?</p>
+      </div>
+      <div class="msg me">
+        <div class="who">Sahil</div>
+        <p>From labeled examples — every input arrives with the right answer attached. The model predicts, compares its guess to the label, measures the error, and adjusts its parameters to shrink it. Repeat that across thousands of examples and "guess, check, adjust" turns into real pattern recognition. It's studying with the answer key in hand.</p>
+      </div>
+
+      <div class="msg coach">
+        <div class="who"><span class="qtag unsup">Q2 · Unsupervised</span>Coach</div>
+        <p>What is the main approach used to train models in unsupervised learning?</p>
+      </div>
+      <div class="msg me unsup">
+        <div class="who">Sahil</div>
+        <p>No labels at all. The model gets raw data and has to find the structure itself — clustering similar points, surfacing patterns, flagging outliers. Nobody defines "customer segment" in advance; the model discovers that these examples belong together and those don't. It's sorting a box of unlabeled photos into piles that make sense.</p>
+      </div>
+
+      <div class="msg coach">
+        <div class="who"><span class="qtag rl">Q3 · Reinforcement</span>Coach</div>
+        <p>In reinforcement learning, how does an agent learn the best actions to take?</p>
+      </div>
+      <div class="msg me rl">
+        <div class="who">Sahil</div>
+        <p>By acting and living with the consequences. The agent tries an action, the environment hands back a reward or a penalty, and the agent updates its strategy to favor what paid off — while still exploring enough to find better moves it hasn't tried yet. Trial, error, feedback, repeat: learning a video game without reading the manual.</p>
+      </div>
+
+      <div class="msg coach">
+        <div class="who"><span class="qtag core">Q4 · Algorithms</span>Coach</div>
+        <p>Why are algorithms important in the training of machine learning models?</p>
+      </div>
+      <div class="msg me">
+        <div class="who">Sahil</div>
+        <p>The algorithm is the learning procedure itself — the recipe that turns error into improvement. Something like gradient descent decides which direction, and how far, to nudge every parameter after each mistake. Without it, data is just a pile of examples; the algorithm is what converts that pile into a better model, and the choice shapes what's learnable, how fast, and at what cost.</p>
+      </div>
+
+      <div class="msg coach">
+        <div class="who"><span class="qtag core">Q5 · Workflow</span>Coach</div>
+        <p>What are the basic steps involved in training a machine learning model?</p>
+      </div>
+      <div class="msg me">
+        <div class="who">Sahil</div>
+        <p>Collect and prepare the data, choose a model and algorithm, then train — feed examples, measure error, adjust. Evaluate on data the model has never seen, tune, and go around again until it generalizes. Then deploy and keep monitoring. The loop matters more than any single step.</p>
+      </div>
+
+      <div class="msg coach">
+        <div class="who"><span class="qtag core">Q6 · Iteration</span>Coach</div>
+        <p>How does repetition — iterating over the data — help in training a model?</p>
+      </div>
+      <div class="msg me">
+        <div class="who">Sahil</div>
+        <p>One pass gives you a rough sketch. Each additional pass lets the model correct a little more of its error, converging from noise toward pattern — the way a song settles in with practice. The catch: too many passes over the same data and it stops learning and starts memorizing. Iteration builds the skill; overdoing it builds overfitting.</p>
+      </div>
+
+      <div class="msg coach">
+        <div class="who"><span class="qtag core">Q7 · Data</span>Coach</div>
+        <p>What is the role of examples — data — in training a machine learning model?</p>
+      </div>
+      <div class="msg me">
+        <div class="who">Sahil</div>
+        <p>Data is the model's entire experience of the world — the only thing it learns from. Quality, quantity, and representativeness set the ceiling: thin or biased examples produce a model that's confidently wrong. A brilliant algorithm can't out-train bad data.</p>
+      </div>
+
+      <div class="msg me">
+        <div class="who"><span class="qtag beyond">Beyond the list</span>Sahil</div>
+        <p>One more before I go — where do RAG and fine-tuning fit into all of this?</p>
+      </div>
+      <div class="msg coach">
+        <div class="who">Coach</div>
+        <p>Fine-tuning continues training on new examples, changing what the model itself knows. Retrieval-augmented generation leaves the model alone and hands it the right reference material at answer time — grounding instead of retraining.</p>
+      </div>
+      <div class="msg me">
+        <div class="who">Sahil</div>
+        <p>Which clicked immediately — my first artifact, FitBot, is retrieval-grounding in practice: curated knowledge files, browsing disabled. I'd built the pattern before I had the vocabulary for it.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 03 — Objective</span>
+    <h2>Why I did it</h2>
+    <p>Built for the AIML-500 activity on machine-learning training methods, which replaced a traditional lesson with an AI-coached dialogue. My objective was twofold: lock in a working, plain-English command of how models learn — solid enough to explain without notes — and practice the meta-skill the course is really teaching: using an AI collaborator to pressure-test my own understanding instead of passively consuming content.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 04 — Process</span>
+    <h2>How the session went</h2>
+    <ol class="process">
+      <li><b>Prepared.</b> Read the assigned "A Beginner's Guide to Artificial Intelligence and Machine Learning" before joining, so the session could go deeper than definitions.</li>
+      <li><b>Joined the Space.</b> Entered the course's SchoolAI Space for the Machine Learning Training Methods Coach.</li>
+      <li><b>Worked the seven.</b> Answered each required question in my own words; the coach probed, corrected, and confirmed each answer before moving on.</li>
+      <li><b>Went off-script.</b> Pushed past the required list into RAG versus fine-tuning — the coach confirmed full coverage of the fundamentals and the advanced detour in its closing summary.</li>
+      <li><b>Distilled for the portfolio.</b> Reworked the raw session into the color-coded dialogue on this page, and published the session recording and the coach's closing summary as evidence.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 05 — Tools &amp; Technologies</span>
+    <h2>What I used</h2>
+    <ul class="plain">
+      <li><strong>SchoolAI Spaces</strong> — the AI coach environment; the complete interaction log is recorded there and directly visible to my instructor.</li>
+      <li><strong>Course reading</strong> — "A Beginner's Guide to Artificial Intelligence and Machine Learning."</li>
+      <li><strong>Concepts exercised</strong> — supervised, unsupervised, and reinforcement learning; gradient descent; the training workflow; iteration and overfitting; data quality; RAG and fine-tuning.</li>
+      <li><strong>QuickTime screen recording</strong> — session evidence, transcoded for the web.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 06 — Value Proposition</span>
+    <h2>Why this artifact matters</h2>
+    <div class="vp-panel">
+      Plenty of people can name the three types of machine learning; fewer can explain, without notes, how a reward signal differs from a label — or why iteration quietly tips into overfitting. This artifact shows I can hold the fundamentals conversationally: the exact fluency needed to work alongside ML engineers, question model choices, and translate for stakeholders.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 07 — Unique Value</span>
+    <h2>What makes it different</h2>
+    <p>Most evidence of "I know the ML basics" is a quiz score. This is a conversation — pressure-tested in real time by an AI coach, recorded end to end, and then deliberately reworked for a reading audience rather than dumped as a transcript. The off-script detour into RAG versus fine-tuning is the part I'd point to: it's where the session stopped being an assignment and became curiosity.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 08 — Relevance</span>
+    <h2>How it connects to my value proposition</h2>
+    <p>Training-method fluency is the vocabulary of every AI product decision I'll make: does this problem have labels, does a reward signal even exist, is fine-tuning or retrieval the right adaptation strategy. That last one isn't theoretical for me — my first artifact, FitBot, is retrieval-grounding in practice, and this session gave that build its formal backbone. It also completes the set: Artifact 1 shows I can build, Artifact 2 shows I can choose, and this one shows I can explain.</p>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <span class="field">Field 09 — Evidence</span>
+    <h2>See the session</h2>
+    <div class="videobox">
+      <video controls preload="metadata" poster="ml-coach-poster.jpg">
+        <source src="ml-coach-session.mp4" type="video/mp4">
+        Your browser does not support embedded video. <a href="ml-coach-session.mp4">Download the recording</a>.
+      </video>
+      <div class="cap">A walkthrough of the full coach session, end to end (32 seconds).</div>
+    </div>
+    <figure class="shot">
+      <img src="ml-coach-closing.png" alt="The coach's closing summary confirming full coverage of all seven questions plus RAG and fine-tuning">
+      <figcaption>The coach's closing check: all seven questions covered, plus the RAG and fine-tuning detour.</figcaption>
+    </figure>
+    <p style="margin-top:16px">The complete interaction log also lives in the SchoolAI Space, where it is directly visible to my instructor.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 10 — References</span>
+    <h2>References</h2>
+    <div class="refs">
+      <p>SchoolAI. (2026). <em>AIML-500 Machine Learning Training Methods Coach</em> [AI chatbot Space]. https://student.schoolai.com</p>
+      <p><em>A Beginner's Guide to Artificial Intelligence and Machine Learning</em>. AIML-500 assigned reading, Indiana Wesleyan University. (2026).</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-line">Sahil Sapra · AIML-500 Professional Portfolio · Indiana Wesleyan University · 2026</div>
+    <div class="foot-links">
+      <a href="index.html">Portfolio home</a>
+      <a href="fitbot.html">Artifact 1: FitBot</a>
+      <a href="ml-vs-dl.html">Artifact 2: ML vs. DL</a>
+      <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
