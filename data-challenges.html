@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three Ways Data Breaks a Model — Artifact 4 · Sahil Sapra</title>
+<meta name="description" content="Three escalating applied data challenges — missing values, extreme class imbalance, and production drift — diagnosed live with an AI coach. Artifact 4 of Sahil Sapra's AIML-500 portfolio.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231B4F9C'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='monospace'>S</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F5F7FB;
+  --panel:#FFFFFF;
+  --ink:#101828;
+  --muted:#5B6472;
+  --accent:#1B4F9C;
+  --accent-bright:#2163CA;
+  --line:#D8DEE9;
+  --fail:#B42318;
+  --fail-bg:#FDF3F2;
+  --fail-line:#EFC7C3;
+  --pass:#0E8A5F;
+  --pass-bg:#E9F6F0;
+  --pass-line:#B7DFCB;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important}}
+body{
+  background:var(--paper);color:var(--ink);
+  font-family:'Newsreader',Georgia,serif;font-size:19px;line-height:1.65;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+a:focus-visible{outline:2px solid var(--accent-bright);outline-offset:3px;border-radius:2px}
+
+/* ---------- nav ---------- */
+nav{border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.nav-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:17px;color:var(--ink);text-decoration:none}
+.back{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--muted);text-decoration:none;text-transform:uppercase;letter-spacing:0.06em}
+.back:hover{color:var(--accent-bright)}
+
+/* ---------- hero ---------- */
+header.hero{padding:64px 0 44px;border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--accent);margin-bottom:16px;
+}
+h1{
+  font-family:'Space Grotesk',sans-serif;font-weight:700;
+  font-size:clamp(34px,6vw,52px);letter-spacing:-0.03em;line-height:1.05;margin-bottom:16px;
+}
+.hero-sub{max-width:660px;color:var(--muted);font-size:20px;margin-bottom:24px}
+.chips{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  border:1px solid var(--line);background:var(--panel);border-radius:999px;
+  padding:5px 13px;color:var(--muted);letter-spacing:0.04em;
+}
+.cta-row{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;
+  text-decoration:none;border-radius:8px;padding:13px 22px;letter-spacing:-0.01em;
+  transition:transform .12s ease, background .12s ease;
+}
+.btn-solid{background:var(--accent-bright);color:#fff}
+.btn-solid:hover{background:var(--accent);transform:translateY(-1px)}
+.btn-ghost{border:1px solid var(--accent);color:var(--accent);background:var(--panel)}
+.btn-ghost:hover{background:#EEF3FB}
+
+/* ---------- signature: triage ladder ---------- */
+.triage{padding:44px 0;border-bottom:1px solid var(--line)}
+.triage-lead{font-size:22px;line-height:1.55;max-width:730px;margin-bottom:14px}
+.triage-lead b{font-family:'Space Grotesk',sans-serif;font-weight:600}
+.ladder-key{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);
+  letter-spacing:0.08em;text-transform:uppercase;margin:22px 0 10px;
+}
+.ladder{display:flex;flex-direction:column;gap:10px}
+.rung{
+  display:grid;grid-template-columns:auto 218px 1fr;align-items:center;column-gap:16px;row-gap:10px;
+  background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 18px;
+}
+.rung .lv{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--muted);border:1px solid var(--line);
+  border-radius:4px;padding:4px 8px;white-space:nowrap;
+}
+.rung .sym{
+  font-family:'IBM Plex Mono',monospace;font-size:13.5px;font-weight:600;letter-spacing:0.01em;
+  color:var(--fail);background:var(--fail-bg);border:1px solid var(--fail-line);
+  border-radius:6px;padding:7px 12px;white-space:nowrap;text-align:center;
+}
+.rung .fix{
+  font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:16px;letter-spacing:-0.01em;
+  color:var(--ink);display:flex;align-items:baseline;gap:9px;
+}
+.rung .fix::before{
+  content:"";flex:0 0 auto;width:8px;height:8px;border-radius:50%;
+  background:var(--pass);transform:translateY(-1px);
+}
+@media(max-width:700px){
+  .rung{grid-template-columns:auto 1fr}
+  .rung .sym{text-align:left}
+  .rung .fix{grid-column:1 / -1}
+}
+
+/* ---------- field labels + sections ---------- */
+section{padding:52px 0;border-bottom:1px solid var(--line)}
+.field{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);
+  border:1px solid var(--accent);border-radius:4px;
+  padding:5px 10px;margin-bottom:20px;background:var(--panel);
+}
+.field::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--accent-bright)}
+h2{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;
+  font-size:clamp(24px,3.6vw,30px);letter-spacing:-0.02em;margin-bottom:16px;
+}
+p+p{margin-top:15px}
+ol.process{margin:10px 0 0 22px}
+ol.process li{margin-bottom:14px;padding-left:6px}
+ol.process b{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:18px;letter-spacing:-0.01em}
+ul.plain{margin:10px 0 0 22px}
+ul.plain li{margin-bottom:10px}
+
+/* ---------- case log ---------- */
+.cases{display:flex;flex-direction:column;gap:22px;margin-top:26px}
+.case{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 28px}
+.case-top{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.case-no{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;font-weight:600;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);
+}
+.case-level{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--line);border-radius:999px;padding:3px 10px;
+}
+.case-metric{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+  color:var(--fail);background:var(--fail-bg);border:1px solid var(--fail-line);
+  border-radius:5px;padding:4px 10px;margin-left:auto;
+}
+.case h3{
+  font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:22px;
+  letter-spacing:-0.02em;margin-bottom:10px;
+}
+.brief{color:var(--muted);font-size:17px;line-height:1.6}
+.block{margin-top:20px;padding-top:18px;border-top:1px solid var(--line)}
+.mlabel{
+  display:block;font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;
+  text-transform:uppercase;letter-spacing:0.12em;color:var(--muted);margin-bottom:8px;
+}
+.block.call .mlabel{color:var(--pass)}
+.block p{font-size:17.5px;line-height:1.62}
+.pushback{
+  margin-top:20px;background:var(--fail-bg);border:1px solid var(--fail-line);
+  border-radius:8px;padding:18px 20px;
+}
+.pushback .mlabel{color:var(--fail);margin-bottom:6px}
+.pushback p{font-size:16.5px;line-height:1.6}
+
+/* ---------- VP panel ---------- */
+.vp-panel{
+  background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);
+  border-radius:8px;padding:28px 30px;font-size:20.5px;line-height:1.6;
+}
+
+/* ---------- evidence ---------- */
+figure.shot{background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:20px}
+figure.shot img{width:100%;display:block}
+figcaption{
+  padding:13px 16px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+  color:var(--muted);border-top:1px solid var(--line);letter-spacing:0.02em;line-height:1.5;
+}
+.refs p{font-size:16.5px;color:var(--muted);padding-left:28px;text-indent:-28px;margin-top:12px}
+
+/* ---------- footer ---------- */
+footer{padding:44px 0 60px}
+.foot-line{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.04em}
+.foot-links{margin-top:12px}
+.foot-links a{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--accent);text-decoration:none;margin-right:20px;line-height:2}
+.foot-links a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-inner">
+    <a class="nav-name" href="index.html">Sahil Sapra</a>
+    <a class="back" href="index.html">← Portfolio home</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Artifact 04 · Workshop 4 · Applied Data Challenge Scenarios</div>
+    <h1>Three Ways Data<br>Breaks a Model</h1>
+    <p class="hero-sub">Missing values, a half-percent positive class, and a live model decaying in production — three escalating scenarios diagnosed under an AI coach that pushed back on my calls.</p>
+    <div class="chips">
+      <span class="chip">3 scenarios</span>
+      <span class="chip">Beginner → Advanced</span>
+      <span class="chip">1 call revised under pushback</span>
+      <span class="chip">Full session captured</span>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-solid" href="#cases">Read the case log ↓</a>
+      <a class="btn btn-ghost" href="#evidence">See the session ↓</a>
+    </div>
+  </div>
+</header>
+
+<div class="triage">
+  <div class="wrap">
+    <p class="triage-lead">Every model in a textbook is trained on data that arrived complete, balanced, and stable. <b>None of mine ever have.</b> These three scenarios take that away one constraint at a time, and each one comes down to the same question: what exactly is broken, and what does the fix cost?</p>
+    <div class="ladder-key">Symptom → the call I made</div>
+    <div class="ladder">
+      <div class="rung">
+        <span class="lv">Case 01</span>
+        <span class="sym">~23% of rows incomplete</span>
+        <span class="fix">Impute by column type, and flag every gap you fill</span>
+      </div>
+      <div class="rung">
+        <span class="lv">Case 02</span>
+        <span class="sym">0.5% positive class</span>
+        <span class="fix">Stop measuring accuracy, start pricing the threshold</span>
+      </div>
+      <div class="rung">
+        <span class="lv">Case 03</span>
+        <span class="sym">AUC 0.89 → 0.76</span>
+        <span class="fix">Split covariate shift from concept drift before retraining</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 01 — Introduction</span>
+    <h2>What this artifact is</h2>
+    <p>This is a set of three applied data challenges worked through with SchoolAI's Data Challenge Scenario Coach. Each one hands you a broken situation instead of a clean dataset: a table full of holes, a class ratio of 200 to 1, and a deployed model losing accuracy in production. There is no code to submit and no single correct answer. You make the call, explain the reasoning, name the trade-off, and defend it when the coach disagrees. What follows is the case log.</p>
+  </div>
+</section>
+
+<section id="cases">
+  <div class="wrap">
+    <span class="field">Field 02 — Description</span>
+    <h2>The case log</h2>
+    <p>Three scenarios, escalating in difficulty. Each brief is summarized from the coach's prompt; each call and its reasoning are my answers from the live session, tightened for reading. The screenshots in the Evidence section show the originals.</p>
+
+    <div class="cases">
+
+      <article class="case">
+        <div class="case-top">
+          <span class="case-no">Case 01</span>
+          <span class="case-level">Beginner</span>
+          <span class="case-metric">15% + 8% missing</span>
+        </div>
+        <h3>House prices with holes in the data</h3>
+        <p class="brief">A price model built on square footage, bedrooms, year built, and neighborhood. After collection, 15% of rows are missing year built and another 8% are missing bedroom count. The missingness appears random, with no obvious tie to price.</p>
+
+        <div class="block call">
+          <span class="mlabel">The call</span>
+          <p>Impute rather than drop, and treat the two columns differently: neighborhood-level median for year built, mode for bedrooms. Add a binary <em>was_missing</em> flag on both columns. Then validate the whole thing against a dropped-rows baseline.</p>
+        </div>
+        <div class="block">
+          <span class="mlabel">Why</span>
+          <p>If the two gaps barely overlap, dropping rows costs close to a quarter of the dataset, which is far too expensive for the accuracy it buys back. Year built and neighborhood move together, since houses on the same street usually went up around the same time, so a neighborhood median preserves signal that a global median would flatten. The flags cost nothing, and if missingness turns out to carry information the model gets to use it. The baseline comparison is the step people skip, and it is the only thing that proves imputation actually helped instead of just filling space.</p>
+        </div>
+        <div class="pushback">
+          <span class="mlabel">Where the coach pushed back</span>
+          <p>I had offered median or mode for bedrooms as interchangeable. The coach argued mode is the right default for a discrete count, since a median can land on something like 2.5 bedrooms that does not exist in the real world. Fair, and I took it further on myself: I had accepted "the missingness appears random" at face value. That is a hypothesis to test, not a given. If year built goes missing more often on older properties, every choice above changes.</p>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-top">
+          <span class="case-no">Case 02</span>
+          <span class="case-level">Intermediate</span>
+          <span class="case-metric">5,000 of 1,000,000</span>
+        </div>
+        <h3>Fraud detection where the signal is half a percent</h3>
+        <p class="brief">One million card transactions, 5,000 of them fraudulent. The business wants fraud caught, but it is equally sensitive to false positives: flagging a legitimate transaction frustrates the customer and costs real money to investigate.</p>
+
+        <div class="block call">
+          <span class="mlabel">The call</span>
+          <p>Throw out accuracy immediately. Evaluate on precision-recall AUC rather than ROC. Reach for class weights before SMOTE, and if I do resample, only inside the training fold. Gradient boosting with <em>scale_pos_weight</em>. Then tune the decision threshold against expected dollar cost.</p>
+        </div>
+        <div class="block">
+          <span class="mlabel">Why</span>
+          <p>A model that predicts "never fraud" is 99.5% accurate and completely worthless, so accuracy is the first thing to go. ROC flatters at this ratio, because 995,000 negatives make any false positive rate look tiny; a precision-recall curve puts the pressure exactly where the business feels it. SMOTE applied before the split leaks synthetic neighbors of test rows into training and produces a validation score that dies in production. Class weights are simpler and do not invent data. Gradient boosting handles the imbalance natively and still gives me feature importance, which matters when someone asks why their card got declined.</p>
+          <p>The honest answer, though, is that sampling is not the real lever. The threshold is. Put a dollar figure on a missed fraud versus an investigation, then tune to minimize expected cost instead of defaulting to 0.5 because that is what the library does.</p>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-top">
+          <span class="case-no">Case 03</span>
+          <span class="case-level">Advanced</span>
+          <span class="case-metric">AUC 0.89 → 0.76</span>
+        </div>
+        <h3>A churn model quietly decaying in production</h3>
+        <p class="brief">Trained on six months of history, validated at 0.89 AUC, deployed. Three months in, AUC is 0.76 and precision on the high-risk segment has fallen off. Meanwhile the company launched in two new markets with different demographics, a pricing change landed six weeks ago, and feature distributions have shifted.</p>
+
+        <div class="block call">
+          <span class="mlabel">The call</span>
+          <p>Separate covariate shift from concept drift before touching the model. Slice performance by market and by pre/post-pricing cohort. Do not train one model across two pricing regimes. Monitor input distributions, not just AUC. Retrain on trigger rather than on the calendar, and keep a rollback path.</p>
+        </div>
+        <div class="block">
+          <span class="mlabel">Why</span>
+          <p>The two new markets are covariate shift: the inputs moved, but the relationship between behavior and churn probably did not. The pricing change is concept drift, where the relationship itself changed. Those need different fixes, and a single blended retrain hides both. Slicing is what tells me which one I am actually looking at, and whether it is both at once.</p>
+          <p>Watching only AUC means finding out months late, after the damage. Watching input distributions catches the shift as it happens. Calendar retraining either burns compute on nothing or misses the event that mattered. On balancing stability against responsiveness, I would make monitoring fast and retraining slow: alert on distribution shift right away, but require a triggered threshold plus a shadow-mode evaluation before a new model takes live traffic, with a rollback ready, because the fresh model can always be worse than the one it replaced.</p>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 03 — Objective</span>
+    <h2>Why I did it</h2>
+    <p>The first three artifacts in this portfolio show that I can build, choose, and explain. This one exists to show that I can diagnose. My objective was to work problems where the data is the obstacle rather than the input, and to practice the part of the job that actually decides whether a model survives contact with production: naming what is wrong, choosing a fix that holds up against a business constraint, and being explicit about the trade-off I am accepting.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 04 — Process</span>
+    <h2>How the session went</h2>
+    <ol class="process">
+      <li><b>Entered the Space.</b> Joined the course's SchoolAI Space for the Data Challenge Scenario Coach, which runs three scenarios in escalating difficulty.</li>
+      <li><b>Worked each case cold.</b> No lookups. Read the scenario, made the call, wrote out the reasoning, and named the trade-off before the coach responded.</li>
+      <li><b>Took the pushback.</b> The coach challenged my imputation choice on Case 01. I conceded the point, then flagged a larger assumption of my own that it had not caught.</li>
+      <li><b>Escalated.</b> The cases moved from a single-table cleanup problem, to an evaluation-metric problem, to a production monitoring problem. Each one added a constraint the previous case did not have.</li>
+      <li><b>Captured and distilled.</b> Screenshotted the session end to end, then reworked the three answers into the case log on this page, keeping the reasoning intact and cutting the filler.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 05 — Tools &amp; Technologies</span>
+    <h2>What I used</h2>
+    <ul class="plain">
+      <li><strong>SchoolAI Spaces</strong> — the AIML-500 Data Challenge Scenario Coach; the complete interaction log is recorded there and directly visible to my instructor.</li>
+      <li><strong>Data preparation concepts</strong> — missing-data mechanisms, column-appropriate imputation, missingness indicator flags, dropped-rows baselines.</li>
+      <li><strong>Evaluation concepts</strong> — precision-recall AUC versus ROC-AUC, class weighting, SMOTE and train/test leakage, <em>scale_pos_weight</em>, cost-sensitive threshold tuning.</li>
+      <li><strong>Production ML concepts</strong> — covariate shift versus concept drift, cohort slicing, input distribution monitoring, trigger-based retraining, shadow evaluation, rollback.</li>
+      <li><strong>Screen capture</strong> — session evidence, resized for the web.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 06 — Value Proposition</span>
+    <h2>Why this artifact matters</h2>
+    <div class="vp-panel">
+      Getting a model to 0.89 in a notebook is the easy part. The job starts when a quarter of the rows are incomplete, the positive class is half a percent, and the number quietly slides to 0.76 three months after launch. This artifact shows I can name what is actually broken, pick a fix that survives a business constraint, and tie the decision to a dollar cost rather than a leaderboard metric.
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 07 — Unique Value</span>
+    <h2>What makes it different</h2>
+    <p>Most coursework evidence shows the right answer arriving on the first try. This one keeps a call I got partly wrong. The mode-versus-median correction is small on its own, but the bigger miss was mine to catch: I had taken "the missingness appears random" at face value instead of treating it as something to verify. Finding your own weak assumption before someone else does is the habit I would want a hiring manager to see, which is exactly why the pushback stayed in rather than getting edited out.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 08 — Relevance</span>
+    <h2>How it connects to my value proposition</h2>
+    <p>My value proposition is turning ambiguous AI opportunities into working, tested products, and ambiguity in AI work almost always shows up as a data problem first. All three of these cases are things I have watched play out on real teams: the field nobody validated, the metric that flattered a useless model, the dashboard that looked fine because nobody was watching the inputs. At SpecHawk that instinct is the product, since a QA platform's entire job is catching the failure before a customer does.</p>
+    <p>It also completes the arc across this portfolio. Artifact 1 shows I can build, Artifact 2 shows I can choose, Artifact 3 shows I can explain, and this one shows I can diagnose.</p>
+  </div>
+</section>
+
+<section id="evidence">
+  <div class="wrap">
+    <span class="field">Field 09 — Evidence</span>
+    <h2>See the session</h2>
+    <figure class="shot">
+      <img src="data-case-1.png" alt="SchoolAI Data Challenge Scenario Coach showing Scenario 1 on missing house price data, with my answer on imputation strategy below it">
+      <figcaption>Case 01 — the missing-data scenario as posed, with my answer on column-appropriate imputation and missingness flags.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="data-case-2.png" alt="SchoolAI Data Challenge Scenario Coach showing Scenario 2 on credit card fraud class imbalance, with my answer on metrics and threshold tuning below it">
+      <figcaption>Case 02 — the class-imbalance scenario, with my answer on precision-recall AUC, fold-safe resampling, and cost-based thresholds.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="data-case-3.png" alt="SchoolAI Data Challenge Scenario Coach showing Scenario 3, an advanced churn model drift scenario">
+      <figcaption>Case 03 — the advanced drift scenario as posed by the coach: a churn model degrading from 0.89 to 0.76 AUC in production.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img src="data-coach-closing.png" alt="The coach's closing message confirming all three scenarios were completed">
+      <figcaption>The coach's closing check, confirming all three scenarios completed from basic missing data through production-level drift handling.</figcaption>
+    </figure>
+    <p style="margin-top:16px">The complete interaction log also lives in the SchoolAI Space, where it is directly visible to my instructor.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="field">Field 10 — References</span>
+    <h2>References</h2>
+    <div class="refs">
+      <p>SchoolAI. (2026). <em>AIML-500 Data Challenge Scenario Coach</em> [AI chatbot Space]. https://student.schoolai.com</p>
+      <p>Chawla, N. V., Bowyer, K. W., Hall, L. O., &amp; Kegelmeyer, W. P. (2002). SMOTE: Synthetic minority over-sampling technique. <em>Journal of Artificial Intelligence Research, 16</em>, 321–357.</p>
+      <p>Saito, T., &amp; Rehmsmeier, M. (2015). The precision-recall plot is more informative than the ROC plot when evaluating binary classifiers on imbalanced datasets. <em>PLOS ONE, 10</em>(3), e0118432.</p>
+      <p>Gama, J., Žliobaitė, I., Bifet, A., Pechenizkiy, M., &amp; Bouchachia, A. (2014). A survey on concept drift adaptation. <em>ACM Computing Surveys, 46</em>(4), 1–37.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-line">Sahil Sapra · AIML-500 Professional Portfolio · Indiana Wesleyan University · 2026</div>
+    <div class="foot-links">
+      <a href="index.html">Portfolio home</a>
+      <a href="fitbot.html">Artifact 1: FitBot</a>
+      <a href="ml-vs-dl.html">Artifact 2: ML vs. DL</a>
+      <a href="how-machines-learn.html">Artifact 3: How Machines Learn</a>
+      <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
