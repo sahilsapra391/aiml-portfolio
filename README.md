@@ -13,4 +13,7 @@ Graduate AI/ML portfolio for AIML-500 at Indiana Wesleyan University.
 - `how-machines-learn.html` — Artifact 3: AI-coached session on ML training methods
 - `ml-coach-session.mp4` / `ml-coach-poster.jpg` — Artifact 3 session recording + video poster
 - `ml-coach-closing.png` — Artifact 3 evidence: the coach's closing summary
+- `data-challenges.html` — Artifact 4: three applied data challenge scenarios (missing data, class imbalance, production drift)
+- `data-case-1.png`, `data-case-2.png`, `data-case-3.png` — Artifact 4 evidence: the three scenarios and my answers
+- `data-coach-closing.png` — Artifact 4 evidence: the coach's completion summary
 - `fitbot-landing.png`, `fitbot-intake.png`, `fitbot-plan.png`, `fitbot-config.png` — Artifact 1 evidence screenshots
