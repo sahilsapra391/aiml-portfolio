@@ -136,6 +136,13 @@ ul.plain li{margin-bottom:10px}
 }
 .readfull:hover{background:var(--accent);transform:translateY(-1px)}
 
+/* ---------- bottom nav ---------- */
+.bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:30px;border-top:1px solid var(--line)}
+.bottom-nav a{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:var(--accent-bright);text-decoration:none}
+.bottom-nav a:hover{text-decoration:underline}
+.bottom-nav .prev{margin-right:auto}
+.bottom-nav .next{margin-left:auto}
+
 /* ---------- footer ---------- */
 footer{padding:44px 0 60px}
 .foot-line{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.04em}
@@ -270,7 +277,8 @@ footer{padding:44px 0 60px}
     <span class="field">Field 06 — Value Proposition</span>
     <h2>Why this artifact matters</h2>
     <div class="vp-panel">
-      Knowing an algorithm is common; knowing <em>when not to use it</em> is what separates people who can apply AI from people who just collect techniques. This artifact shows I can look at a problem's data and constraints and choose the right approach — including the discipline to reach for the simpler tool when it's the better one.
+      Knowing an algorithm is common; knowing <em>when not to use it</em> is what separates people who can apply AI from people who just collect techniques. This artifact shows I can look at a problem's data and constraints and choose the right approach.<br><br>
+      <b>PM Takeaway:</b> Model selection is a margin decision. Choosing a deep neural net when linear regression works means burning compute budget and engineering hours for zero added customer value. Simplicity is a feature, not a compromise.
     </div>
   </div>
 </section>
@@ -287,7 +295,12 @@ footer{padding:44px 0 60px}
   <div class="wrap">
     <span class="field">Field 08 — Relevance</span>
     <h2>How it connects to my value proposition</h2>
-    <p>Model selection is a first-order product decision, not just an engineering one — it drives cost, timeline, explainability, and regulatory exposure. As a technical product manager, being able to reason about ML-vs-DL tradeoffs is exactly the kind of judgment that keeps a team from spending six months and a GPU cluster on a problem linear regression would have solved by Friday. It pairs naturally with my first artifact: FitBot showed I can build; this shows I can decide what to build with.</p>
+    <p>Model selection is a first-order product decision, not just an engineering one — it drives cost, timeline, explainability, and regulatory exposure. As a technical product manager, being able to reason about ML-vs-DL tradeoffs keeps a team from spending six months and a GPU cluster on a problem linear regression would have solved by Friday. Furthermore, selecting the right model is only step one; as explored in <b>Artifact 4 (Data Challenges)</b>, even the most perfectly selected models like the Zestimate will eventually drift and decay in production without active monitoring.</p>
+    
+    <div class="bottom-nav">
+      <a class="prev" href="fitbot.html">← Previous: Artifact 1</a>
+      <a class="next" href="how-machines-learn.html">Next: Artifact 3 — How Machines Learn →</a>
+    </div>
   </div>
 </section>
 
@@ -319,6 +332,7 @@ footer{padding:44px 0 60px}
       <a href="fitbot.html">Artifact 1: FitBot</a>
       <a href="how-machines-learn.html">Artifact 3: How Machines Learn</a>
       <a href="data-challenges.html">Artifact 4: Data Challenges</a>
+      <a href="artifact-5.html">Artifact 5: Iterative Design</a>
       <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
     </div>
   </div>
