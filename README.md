@@ -19,7 +19,7 @@ Graduate AI/ML portfolio for AIML-500 at Indiana Wesleyan University.
 - `fitbot-landing.png`, `fitbot-intake.png`, `fitbot-plan.png`, `fitbot-config.png` — Artifact 1 evidence screenshots
 - `artifact-5.html` — Artifact 5: Iterative Design & Feedback Integration (meta-artifact documenting the portfolio's feedback loop and structural enhancements)
 
-## Recent Updates (Workshop 5)
+## Recent Updates (Workshop 6)
 - Implemented global bottom cross-navigation for a linear reading experience.
 - Added explicit "PM Takeaways" to all Value Proposition sections to tie technical capabilities directly to B2B SaaS and operational business metrics.
 - Cross-linked core concepts across artifacts (e.g., tying data drift in Artifact 4 to model selection in Artifact 2) to build a cohesive ecosystem.
