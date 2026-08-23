@@ -135,6 +135,13 @@ figcaption{
 .refs{margin-top:8px}
 .refs p{font-size:16.5px;color:var(--muted);padding-left:28px;text-indent:-28px;margin-top:12px}
 
+/* ---------- bottom nav ---------- */
+.bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:30px;border-top:1px solid var(--line)}
+.bottom-nav a{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:var(--accent-bright);text-decoration:none}
+.bottom-nav a:hover{text-decoration:underline}
+.bottom-nav .prev{margin-right:auto}
+.bottom-nav .next{margin-left:auto}
+
 /* ---------- footer ---------- */
 footer{padding:44px 0 60px}
 .foot-line{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.04em}
@@ -262,7 +269,8 @@ footer{padding:44px 0 60px}
     <span class="field">Field 06 — Value Proposition</span>
     <h2>Why this artifact matters</h2>
     <div class="vp-panel">
-      For anyone evaluating whether I can build with AI rather than just talk about it, FitBot is the evidence: a complete cycle from user research to problem definition to instruction design, knowledge grounding, and behavioral testing — ending in a working product you can open and use right now.
+      For anyone evaluating whether I can build with AI rather than just talk about it, FitBot is the evidence: a complete cycle from user research to problem definition to instruction design, knowledge grounding, and behavioral testing.<br><br>
+      <b>PM Takeaway:</b> A product's intelligence is useless if the UX feels like an interrogation. Grounding the AI in verified knowledge (RAG) lowers hallucination risk, shifting the build from a novelty prototype to a viable production tool.
     </div>
   </div>
 </section>
@@ -279,7 +287,11 @@ footer{padding:44px 0 60px}
   <div class="wrap">
     <span class="field">Field 08 — Relevance</span>
     <h2>How it connects to my value proposition</h2>
-    <p>The skills in this artifact transfer directly to production AI work: conversational UX design, system-prompt and instruction engineering, retrieval-style knowledge grounding, model behavior evaluation, and responsible-AI boundary setting. It's a small product, but it exercises the same competencies my program — and the industry — are building toward, and it demonstrates the working style my personal value proposition promises: research first, build second, verify third.</p>
+    <p>The skills in this artifact transfer directly to production AI work: conversational UX design, system-prompt and instruction engineering, retrieval-style knowledge grounding, model behavior evaluation, and responsible-AI boundary setting. While FitBot applies LLMs to text generation, it pairs directly with <b>Artifact 2 (ML vs. DL)</b>, where I break down exactly when <i>not</i> to use this kind of heavy architecture in favor of leaner, traditional machine learning.</p>
+    
+    <div class="bottom-nav">
+      <a class="next" href="ml-vs-dl.html">Next: Artifact 2 — ML vs. DL →</a>
+    </div>
   </div>
 </section>
 
@@ -338,6 +350,7 @@ footer{padding:44px 0 60px}
       <a href="ml-vs-dl.html">Artifact 2: ML vs. DL</a>
       <a href="how-machines-learn.html">Artifact 3: How Machines Learn</a>
       <a href="data-challenges.html">Artifact 4: Data Challenges</a>
+      <a href="artifact-5.html">Artifact 5: Iterative Design</a>
       <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
     </div>
   </div>
