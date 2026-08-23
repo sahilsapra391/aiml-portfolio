@@ -155,6 +155,13 @@ figure.shot{background:var(--panel);border:1px solid var(--line);border-radius:1
 figure.shot img{width:100%;display:block}
 .refs p{font-size:16.5px;color:var(--muted);padding-left:28px;text-indent:-28px;margin-top:12px}
 
+/* ---------- bottom nav ---------- */
+.bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:30px;border-top:1px solid var(--line)}
+.bottom-nav a{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:var(--accent-bright);text-decoration:none}
+.bottom-nav a:hover{text-decoration:underline}
+.bottom-nav .prev{margin-right:auto}
+.bottom-nav .next{margin-left:auto}
+
 /* ---------- footer ---------- */
 footer{padding:44px 0 60px}
 .foot-line{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.04em}
@@ -339,7 +346,8 @@ footer{padding:44px 0 60px}
     <span class="field">Field 06 — Value Proposition</span>
     <h2>Why this artifact matters</h2>
     <div class="vp-panel">
-      Plenty of people can name the three types of machine learning; fewer can explain, without notes, how a reward signal differs from a label — or why iteration quietly tips into overfitting. This artifact shows I can hold the fundamentals conversationally: the exact fluency needed to work alongside ML engineers, question model choices, and translate for stakeholders.
+      Plenty of people can name the three types of machine learning; fewer can explain, without notes, how a reward signal differs from a label — or why iteration quietly tips into overfitting.<br><br>
+      <b>PM Takeaway:</b> Stakeholder alignment requires translating technical mechanics into business outcomes. If you can't explain how a model learns, you can't defend its predictions or its failures to a customer.
     </div>
   </div>
 </section>
@@ -356,7 +364,12 @@ footer{padding:44px 0 60px}
   <div class="wrap">
     <span class="field">Field 08 — Relevance</span>
     <h2>How it connects to my value proposition</h2>
-    <p>Training-method fluency is the vocabulary of every AI product decision I'll make: does this problem have labels, does a reward signal even exist, is fine-tuning or retrieval the right adaptation strategy. That last one isn't theoretical for me — my first artifact, FitBot, is retrieval-grounding in practice, and this session gave that build its formal backbone. It also completes the set: Artifact 1 shows I can build, Artifact 2 shows I can choose, and this one shows I can explain.</p>
+    <p>Training-method fluency is the vocabulary of every AI product decision I'll make: does this problem have labels, does a reward signal even exist, is fine-tuning or retrieval the right adaptation strategy. That last one isn't theoretical for me — as built in <b>Artifact 1 (FitBot)</b>, retrieval-augmented generation (RAG) is how I grounded my own application. This session gave that practical build its formal theoretical backbone.</p>
+
+    <div class="bottom-nav">
+      <a class="prev" href="ml-vs-dl.html">← Previous: Artifact 2</a>
+      <a class="next" href="data-challenges.html">Next: Artifact 4 — Data Challenges →</a>
+    </div>
   </div>
 </section>
 
@@ -398,6 +411,7 @@ footer{padding:44px 0 60px}
       <a href="fitbot.html">Artifact 1: FitBot</a>
       <a href="ml-vs-dl.html">Artifact 2: ML vs. DL</a>
       <a href="data-challenges.html">Artifact 4: Data Challenges</a>
+      <a href="artifact-5.html">Artifact 5: Iterative Design</a>
       <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
     </div>
   </div>
