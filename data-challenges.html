@@ -180,6 +180,13 @@ figcaption{
 }
 .refs p{font-size:16.5px;color:var(--muted);padding-left:28px;text-indent:-28px;margin-top:12px}
 
+/* ---------- bottom nav ---------- */
+.bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:40px;padding-top:30px;border-top:1px solid var(--line)}
+.bottom-nav a{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:16px;color:var(--accent-bright);text-decoration:none}
+.bottom-nav a:hover{text-decoration:underline}
+.bottom-nav .prev{margin-right:auto}
+.bottom-nav .next{margin-left:auto}
+
 /* ---------- footer ---------- */
 footer{padding:44px 0 60px}
 .foot-line{font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted);letter-spacing:0.04em}
@@ -363,7 +370,8 @@ footer{padding:44px 0 60px}
     <span class="field">Field 06 — Value Proposition</span>
     <h2>Why this artifact matters</h2>
     <div class="vp-panel">
-      Getting a model to 0.89 in a notebook is the easy part. The job starts when a quarter of the rows are incomplete, the positive class is half a percent, and the number quietly slides to 0.76 three months after launch. This artifact shows I can name what is actually broken, pick a fix that survives a business constraint, and tie the decision to a dollar cost rather than a leaderboard metric.
+      Getting a model to 0.89 in a notebook is the easy part. The job starts when a quarter of the rows are incomplete, the positive class is half a percent, and the number quietly slides to 0.76 three months after launch.<br><br>
+      <b>PM Takeaway:</b> Tying threshold tuning to the actual dollar cost of a false positive ensures the model optimizes for operational KPIs, not just abstract accuracy.
     </div>
   </div>
 </section>
@@ -380,8 +388,12 @@ footer{padding:44px 0 60px}
   <div class="wrap">
     <span class="field">Field 08 — Relevance</span>
     <h2>How it connects to my value proposition</h2>
-    <p>My value proposition is turning ambiguous AI opportunities into working, tested products, and ambiguity in AI work almost always shows up as a data problem first. All three of these cases are things I have watched play out on real teams: the field nobody validated, the metric that flattered a useless model, the dashboard that looked fine because nobody was watching the inputs. At SpecHawk that instinct is the product, since a QA platform's entire job is catching the failure before a customer does.</p>
-    <p>It also completes the arc across this portfolio. Artifact 1 shows I can build, Artifact 2 shows I can choose, Artifact 3 shows I can explain, and this one shows I can diagnose.</p>
+    <p>My value proposition is turning ambiguous AI opportunities into working, tested products, and ambiguity in AI work almost always shows up as a data problem first. All three of these cases are things I have watched play out on real teams: the field nobody validated, the metric that flattered a useless model, the dashboard that looked fine because nobody was watching the inputs. It also links back to the valuation models discussed in <b>Artifact 2</b>: even a perfectly selected linear regression will decay if the underlying demographic inputs shift without triggering a retraining alert.</p>
+    
+    <div class="bottom-nav">
+      <a class="prev" href="how-machines-learn.html">← Previous: Artifact 3</a>
+      <a class="next" href="artifact-5.html">Next: Artifact 5 — Iterative Design →</a>
+    </div>
   </div>
 </section>
 
@@ -430,6 +442,8 @@ footer{padding:44px 0 60px}
       <a href="fitbot.html">Artifact 1: FitBot</a>
       <a href="ml-vs-dl.html">Artifact 2: ML vs. DL</a>
       <a href="how-machines-learn.html">Artifact 3: How Machines Learn</a>
+      <a href="data-challenges.html">Artifact 4: Data Challenges</a>
+      <a href="artifact-5.html">Artifact 5: Iterative Design</a>
       <a href="https://sahilsapra.com" target="_blank" rel="noopener">sahilsapra.com</a>
     </div>
   </div>
